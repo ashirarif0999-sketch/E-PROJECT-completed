@@ -1,0 +1,229 @@
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tourney:wdth,wght@92.4,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+:root{
+  --accent: #009dff;
+  --accent-2: #27d3dd;
+  --bg: #f9fcff;
+  --card-bg: #fff;
+  --muted: #5c6b80;
+  --feature-bg: #f0faff;
+  --radius: 12px;
+  --nav-offset: 90px; /* adjust if your navbar height differs */
+}
+address {
+  font-style: normal;
+  line-height: 2;
+  font-size: 15px;
+  color: #444;
+  position: relative;
+  font-family: 'rubik', Arial, Helvetica, sans-serif;
+  top: -55px;
+}
+body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #98ccfa 100%);
+            min-height: 100vh;
+            transition: all 0.3s ease-in-out;
+            padding-top: 20px; /* Space for fixed navbar */
+        }
+
+* { box-sizing: border-box; font-family: 'Space Grotesk', sans-serif;}
+html,body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Poppins", system-ui, Arial, sans-serif;
+  background: linear-gradient(135deg,#f5f7fa 0%,#98ccfa 100%);
+  color: #122;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* keep page content below fixed navbar */
+header, .comparison-table, footer { max-width: 1500px; margin-left: auto; margin-right: auto; padding-left: 16px; padding-right: 16px; }
+
+/* ---------- Header ---------- */
+header {
+  background: linear-gradient(90deg, var(--accent), #70c9ff);
+  color: #fff;
+  text-align: center;
+  padding: 45px 16px;
+  margin-top: var(--nav-offset);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+header h1 { font-size: 40px; margin: 0 0 6px; font-size: 900;}
+header p { margin: 0; font-size: .98rem; opacity: .95; }
+
+/* ---------- Comparison wrapper ---------- */
+.comparison-table {
+  margin: 26px auto;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 22px rgba(3,18,38,0.06);
+  padding: 16px;
+  overflow: hidden; /* tablet/desktop show table fully, mobile uses card view */
+}
+
+/* horizontal scroll container for medium screens */
+.comparison-table .table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- Table defaults (desktop-first looks) ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: .95rem;
+  min-width: 780px; /* allow horizontal scrolling on small widths */
+}
+
+thead {
+  background: var(--accent);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+th, td {
+  border: 1px solid rgba(0,157,255,0.08);
+  padding: 12px 10px;
+  vertical-align: middle;
+}
+
+th {
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+tbody tr:nth-child(even) { background: #f3faff; }
+tbody tr:hover { background: #e5f4ff; transition: background .22s ease; }
+
+/* feature (first) column styling */
+td.feature {
+  text-align: left;
+  font-weight: 700;
+  color: #0077cc;
+  background: var(--feature-bg);
+  white-space: nowrap;
+}
+
+/* make first column sticky on wide screens for readability */
+@supports (position: sticky) {
+  table th:first-child,
+  table td.feature {
+    position: sticky;
+    left: 0;
+    z-index: 6;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.03);
+    background: linear-gradient(180deg, var(--feature-bg), #fff);
+  }
+  table thead th:first-child {
+    z-index: 7;
+    background: var(--accent);
+    color: #fff;
+  }
+}
+
+/* small visual polish */
+table img { max-width: 80px; height: auto; display:block; margin: 0 auto; }
+
+/* ---------- Buttons / small screens helpers ---------- */
+.hidden-mobile { display: inline-block; }
+.kv { font-size: .92rem; color: var(--muted); }
+
+/* ===========================
+   Responsive rules
+   =========================== */
+
+/* ---------- <= 1024px - medium screens ---------- */
+@media (max-width: 1024px) {
+  header h1 { font-size: 1.6rem; }
+  table { min-width: 720px; font-size: .92rem; }
+  th, td { padding: 10px 8px; }
+}
+
+/* ---------- <= 768px - tablet & small laptops ---------- */
+@media (max-width: 768px) {
+  header { margin-top: calc(var(--nav-offset) - 6px); }
+  .comparison-table { padding: 12px; }
+  table { min-width: 640px; font-size: .9rem; }
+  th, td { padding: 8px 6px; }
+  thead { font-size: .95rem; }
+
+  /* allow a comfortable horizontal scroll for tablet users */
+  .comparison-table .table-wrap { overflow-x: auto; padding-bottom: 8px; }
+  /* subtle shadow when table is scrollable */
+  .comparison-table .table-wrap::-webkit-scrollbar { height: 8px; }
+}
+
+/* ---------- Mobile: <= 480px - stacked card layout ---------- */
+@media (max-width: 480px) {
+  /* Hide thead, convert each row to card-like block */
+  .comparison-table { padding: 10px; }
+  .comparison-table .table-wrap { overflow: visible; } /* no horizontal scroll, use stacked cards */
+  table { width: 100%; border: none; min-width: 0; font-size: .95rem; }
+  thead { display: none; }
+  tbody { display: block; width: 100%; }
+  tbody tr {
+    display: block;
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 6px 18px rgba(2,24,53,0.06);
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.03);
+  }
+
+  /* Each cell becomes a row inside the card */
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    line-height: 1.25;
+  }
+  tbody td:last-child { border-bottom: none; }
+
+  /* label generated from data-label attribute */
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #0f3c66;
+    margin-right: 8px;
+    flex: 0 0 45%;
+    text-align: left;
+    white-space: normal;
+    font-size: .92rem;
+  }
+  tbody td.feature::before {
+    color: var(--accent);
+    flex: 0 0 55%;
+  }
+
+  /* align value on right, allow wrapping */
+  tbody td > * { margin: 0; }
+  tbody td span.value { text-align: right; color: #12324a; font-weight: 600; }
+
+  /* make model, price or emphasized rows slightly larger */
+  tbody tr td.feature { font-size: .95rem; }
+  tbody tr td.value-strong { font-weight: 800; color: #0f2b46; }
+
+  /* footer spacing */
+  footer { margin-top: 8px; padding: 12px 16px; }
+}
+
+/* ---------- small utility helpers ---------- */
+.u-center { text-align:center; }
+.muted { color: var(--muted); font-size: .95rem; }
+
+/* focus outlines for accessibility */
+a:focus, button:focus, .mobile-menu .close-btn:focus { outline: 3px solid rgba(39,211,221,0.25); outline-offset: 2px; border-radius: 6px; }
