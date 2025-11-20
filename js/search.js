@@ -27,18 +27,21 @@ class SearchSystem {
     
     async loadProducts() {
         try {
-            const response = await fetch('../products.json');
+            // First try loading from the same directory (root) since search-results.html is in root
+            const response = await fetch('products.json');
             this.products = await response.json();
             this.filteredProducts = [...this.products];
+            console.log(`Loaded ${this.products.length} products from products.json`);
         } catch (error) {
-            console.error('Error loading products:', error);
-            // Fallback: try loading from root if ../products.json doesn't work
+            console.error('Error loading products from products.json:', error);
+            // Fallback: try loading from parent directory
             try {
-                const response = await fetch('products.json');
+                const response = await fetch('../products.json');
                 this.products = await response.json();
                 this.filteredProducts = [...this.products];
+                console.log(`Loaded ${this.products.length} products from ../products.json`);
             } catch (error2) {
-                console.error('Error loading products from root:', error2);
+                console.error('Error loading products from parent directory:', error2);
             }
         }
     }
@@ -257,18 +260,31 @@ class SearchSystem {
     }
     
     performSearch() {
+        console.log('performSearch called with query:', this.searchQuery);
+        console.log('Total products loaded:', this.products.length);
+        
         if (!this.searchQuery) {
             this.filteredProducts = [...this.products];
+            console.log('No query, showing all products');
         } else {
             // Multi-keyword OR search
             const keywords = this.searchQuery.toLowerCase().split(/\s+/).filter(k => k);
+            console.log('Search keywords:', keywords);
             
             this.filteredProducts = this.products.filter(product => {
-                return keywords.some(keyword => 
+                const matches = keywords.some(keyword => 
                     product.name.toLowerCase().includes(keyword) ||
                     product.description.toLowerCase().includes(keyword)
                 );
+                
+                if (matches) {
+                    console.log('Match found for product:', product.name);
+                }
+                
+                return matches;
             });
+            
+            console.log('Filtered products count:', this.filteredProducts.length);
         }
         
         this.applyFiltersAndSort();
@@ -334,10 +350,16 @@ class SearchSystem {
         const resultsContainer = document.getElementById('results-container');
         const resultsInfo = document.getElementById('results-info');
         
-        if (!resultsContainer || !resultsInfo) return;
+        console.log('displayResults called with', results.length, 'results');
+        
+        if (!resultsContainer || !resultsInfo) {
+            console.error('Results container or info elements not found');
+            return;
+        }
         
         // Update results count
-        resultsInfo.textContent = `${results.length} result${results.length !== 1 ? 's' : ''} for "${this.searchQuery}"`;
+        const queryDisplay = this.searchQuery || 'all products';
+        resultsInfo.textContent = `${results.length} result${results.length !== 1 ? 's' : ''} for "${queryDisplay}"`;
         
         if (results.length === 0) {
             resultsContainer.innerHTML = `
@@ -347,8 +369,11 @@ class SearchSystem {
                     <p>Try different keywords or remove some filters</p>
                 </div>
             `;
+            console.log('No results found, showing no results message');
             return;
         }
+        
+        console.log('Displaying', results.length, 'results');
         
         // Generate product cards with highlighted matches
         const keywords = this.searchQuery.toLowerCase().split(/\s+/).filter(k => k);
