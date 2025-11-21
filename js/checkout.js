@@ -473,4 +473,20 @@ function showNotification(message, type = 'info') {
 // Initialize checkout when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   const checkoutManager = new CheckoutManager();
+/* Search Bar Logic appended by Assistant */
+document.addEventListener("DOMContentLoaded", function() {
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+
+    // Only run if the search bar exists on this page
+    if (searchForm && searchInput) {
+        searchForm.addEventListener('submit', function(e) {
+            // Prevent submission if input is empty
+            if (!searchInput.value.trim()) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    }
+});
 });

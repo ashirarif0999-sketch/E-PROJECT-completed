@@ -285,7 +285,7 @@ class CartManager {
             <i class="fa-solid fa-check" style="font-size: 18px;"></i>
           </div>
           <div>
-            <div style="font-weight: 900; margin-bottom: 2px;">Added to Cart <span class="toast-cart-btn" style="background: none; border: none; color: #007bff; cursor: pointer; font-size: 14px; padding: 0; text-decoration: underline; position: relative; bottom: 1px; left:125px;">
+            <div style="font-weight: 900; margin-bottom: 2px;">Added to Cart <span class="toast-cart-btn" style="background: none; border: none; color: #007bff; cursor: pointer; font-size: 14px; padding: 0; text-decoration: underline; position: relative; bottom: 1px; left:35px;">
             Go to Cart ->
           </span></div>
             <div style="font-size: 14px; color: #666;">${this.escapeHtml(productName)} added to your cart</div>
@@ -514,4 +514,20 @@ class CartManager {
 
 // CartManager initialization is handled by app.js
 
+/* Search Bar Logic appended by Assistant */
+document.addEventListener("DOMContentLoaded", function() {
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+
+    // Only run if the search bar exists on this page
+    if (searchForm && searchInput) {
+        searchForm.addEventListener('submit', function(e) {
+            // Prevent submission if input is empty
+            if (!searchInput.value.trim()) {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    }
+});
 

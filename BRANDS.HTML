@@ -11,6 +11,7 @@
   <script src="js/cart.js" defer></script>
   <script src="js/navigation.js" defer></script>
   <script src="js/dollar-font.js" defer></script>
+  <script src="js/search-integration.js"></script>
   <script src="js/app.js" defer></script>
   <link href="RESPONSIVENESS.css" rel="stylesheet">
   <!-- Bootstrap CSS -->
@@ -42,6 +43,17 @@
       <a href="HOME.html">
         <div class="navbar-logo"><img src="assets/EVORA-LOGO.png" width="125px" alt="Evora Logo"></div>
       </a>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <form action="search-results.html" method="GET">
+          <input type="search" class="search-input" name="q" placeholder="Search products..." aria-label="Search products">
+          <button type="submit" class="search-button" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+
       <div class="hamburger" id="hamburger">
         <i class="fa-solid fa-bars"></i>
       </div>

@@ -738,3 +738,129 @@ address a:hover {
   padding: 12px 17px 12px 11px !important;
 }
 }
+
+/* =========================================
+   NEW FLUID RAINBOW SEARCH BAR
+   ========================================= */
+
+/* 1. Animation Setup */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-clockwise {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+/* 2. Container Layout */
+.search-container {
+  position: relative;
+  width: 90%;
+  /* Fluid clamp: never smaller than 280px, never wider than 600px */
+  max-width: 600px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+/* Desktop Constraint */
+@media (min-width: 992px) {
+  .search-container {
+    max-width: 450px;
+  }
+}
+
+/* 3. Rainbow Border & Glow */
+.search-container::before,
+.search-container::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 55px;
+  z-index: -1;
+  background: conic-gradient(
+      from var(--angle),
+      #ff2000, #0099ff, #00c11b, #ffb600, #ff2000
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.search-container::after {
+  filter: blur(20px);
+  z-index: -2;
+}
+
+/* Animation Triggers */
+.search-container:hover::before,
+.search-container:hover::after,
+.search-container:focus-within::before,
+.search-container:focus-within::after {
+  opacity: 1;
+  animation: spin-clockwise 4s linear infinite;
+}
+
+/* 4. Form & Layout */
+.search-container form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px #23bfda;
+  transition: box-shadow 0.3s ease;
+  /* Fluid Height: Scales between 45px and 65px */
+  height: clamp(45px, 10vw, 65px);
+}
+
+.search-container:hover form,
+.search-container:focus-within form {
+  box-shadow: 0 0 0 0 transparent;
+}
+
+/* 5. Input Field */
+.search-input {
+  flex-grow: 1;
+  min-width: 0; /* Allows shrinking on tiny screens */
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding-left: clamp(15px, 3vw, 30px);
+  padding-right: 10px;
+  font-size: clamp(14px, 2.5vw, 18px);
+  color: #000;
+}
+
+.search-input::placeholder {
+  color: #008080;
+  opacity: 0.7;
+}
+
+/* 6. Button */
+.search-button {
+  /* Fluid Width: Scales between 45px and 65px */
+  width: clamp(45px, 10vw, 65px);
+  height: 100%;
+  flex-shrink: 0; /* Prevents squashing */
+  background: #23bfda;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-button i {
+  color: #008080;
+  transition: color 0.3s ease;
+  /* Fluid Icon Size */
+  font-size: clamp(14px, 4vw, 20px);
+}
+
+.search-container:focus-within .search-button i {
+  color: #000000;
+}
